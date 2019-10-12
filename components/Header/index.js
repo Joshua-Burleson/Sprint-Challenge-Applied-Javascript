@@ -9,6 +9,8 @@
 //  </div >
 // And add it to the DOM in the .header-container component
 
+
+            // If I could edit the HTML I would import this function as a module script, instead I'm going to break DRY and copy-paste it.
 const wrapAndAdd = (wrapper, childElementsInOrder, insertionLocation) => {
     childElementsInOrder.forEach(element => wrapper.appendChild(element));
     return document.querySelector(`${insertionLocation}`).appendChild(wrapper);
