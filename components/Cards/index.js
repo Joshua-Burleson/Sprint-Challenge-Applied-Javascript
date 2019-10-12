@@ -18,9 +18,10 @@
 //
 // Create a card for each of the articles and add the card to the DOM.
 
-const Article = articleData => {
+const Article = (topic, articleData) => {
     // Card div creation
     const articleCard = document.createElement('div');
+    articleCard.dataset.topic = topic === 'node.js' ? 'node' : topic;
     articleCard.classList.add('card');
 
     // Headline creation
@@ -51,6 +52,7 @@ const Article = articleData => {
     authorNameSpan.textContent = articleData.authorName;
     authorDiv.appendChild(authorNameSpan);
 
+    // Returning just to make it feel more React-esque
     return wrapAndAdd(articleCard, [headline, authorDiv], '.cards-container');
 }
 
@@ -58,7 +60,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(res => {
         const articles = res.data.articles
         Object.keys(articles).forEach(topic => {
-            articles[topic].forEach(articleData => Article(articleData));
+            articles[topic].forEach(articleData => Article(topic, articleData));
         });
     })
     .catch(err => console.log(err));

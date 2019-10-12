@@ -13,8 +13,17 @@ const Tab = topic => {
     // Tab creation
     const tab = document.createElement('div');
     tab.classList.add('tab');
+    tab.dataset.topic = topic === 'node.js' ? 'node' : topic;
     tab.textContent = topic;
 
+    // Add event listener
+    tab.addEventListener('click', event => {
+        document.querySelectorAll('.card').forEach(card => {
+            card.dataset.topic === event.target.dataset.topic ? card.style.display = 'flex' : card.style.display = 'none';
+        })
+    });
+
+    // Returning just to make it feel more React-esque
     return document.querySelector('.topics').appendChild(tab);
 }
 
