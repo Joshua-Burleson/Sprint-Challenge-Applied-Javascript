@@ -18,9 +18,12 @@ const Tab = topic => {
 
     // Add event listener
     tab.addEventListener('click', event => {
+        if(event.target.dataset.topic === 'all'){
+            return document.querySelectorAll('.card').forEach(card => card.style.display = 'flex');
+        }
         document.querySelectorAll('.card').forEach(card => {
             card.dataset.topic === event.target.dataset.topic ? card.style.display = 'flex' : card.style.display = 'none';
-        })
+        });
     });
 
     // Returning just to make it feel more React-esque
@@ -28,7 +31,7 @@ const Tab = topic => {
 }
 
 axios.get('https://lambda-times-backend.herokuapp.com/topics')
-    .then(res => res.data.topics.forEach(topic => Tab(topic)))
+    .then(res => [...res.data.topics, 'all'].forEach(topic => Tab(topic)))
     .catch(err => {
         console.log(err);
         document.querySelector('.topics').textContent = 'Data retrieval error occured';

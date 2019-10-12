@@ -51,7 +51,6 @@
   carouselImages[0].style.display = 'block';
 
   document.querySelector('.right-button').addEventListener('click', (event) => {
-    console.log(currentImgIndex);
     if(currentImgIndex < carouselImages.length - 1){ 
       currentImgIndex ++;
       carouselImages[currentImgIndex - 1].style.display = 'none';
@@ -74,5 +73,5 @@
       currentImgIndex = carouselImages.length - 1;
     }
   });
-  
+
 }
