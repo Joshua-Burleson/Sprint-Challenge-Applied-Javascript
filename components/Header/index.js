@@ -9,4 +9,31 @@
 //  </div >
 // And add it to the DOM in the .header-container component
 
-function Header() {}
+
+const wrapAndAdd = (wrapper, childElementsInOrder, insertionLocation) => {
+    childElementsInOrder.forEach(element => wrapper.appendChild(element));
+    return document.querySelector(`${insertionLocation}`).appendChild(wrapper);
+}
+
+// Just messing around, making this an IIFE since it would just called by doing Header() otherwise.
+(function Header() {
+    // Div creation
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('header');
+
+    // Date span 
+    const dateSpan  = document.createElement('span');
+    dateSpan.classList.add('date');
+    dateSpan.textContent = 'March 28, 2019';
+
+    // Header Title
+    const headTitle = document.createElement('h1');
+    headTitle.textContent = 'Lambda Times';
+
+    // Temp span
+    const tempSpan = document.createElement('span');
+    tempSpan.classList.add('temp');
+    tempSpan.textContent = '98°';
+
+    return wrapAndAdd(headerDiv, [dateSpan, headTitle, tempSpan], '.header-container');
+})();

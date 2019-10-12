@@ -17,3 +17,50 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+const Article = (topic, articleData) => {
+    // Card div creation
+    const articleCard = document.createElement('div');
+    articleCard.dataset.topic = topic === 'node.js' ? 'node' : topic;
+    articleCard.classList.add('card');
+
+    // Headline creation
+    const headline = document.createElement('div');
+    headline.classList.add('headline');
+    headline.textContent = articleData.headline;
+
+    // Author div creation
+    const authorDiv = document.createElement('div');
+    authorDiv.classList.add('author');
+
+
+        // Author img-container div creation
+    const authorImgDiv = document.createElement('div');
+    authorImgDiv.classList.add('img-container');
+
+            // Author img element creation and appendment to parent (authorImgDiv)
+    const authorImg = document.createElement('img');
+    authorImg.src = articleData.authorPhoto;
+    authorImgDiv.appendChild(authorImg);
+
+        // AuthorimgDiv appendment to parent (authorDiv)
+    authorDiv.appendChild(authorImgDiv);
+
+
+    // Author name ("By") span creation and appendment to parent (authorDiv)
+    const authorNameSpan = document.createElement('span');
+    authorNameSpan.textContent = articleData.authorName;
+    authorDiv.appendChild(authorNameSpan);
+
+    // Returning just to make it feel more React-esque
+    return wrapAndAdd(articleCard, [headline, authorDiv], '.cards-container');
+}
+
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then(res => {
+        const articles = res.data.articles
+        Object.keys(articles).forEach(topic => {
+            articles[topic].forEach(articleData => Article(topic, articleData));
+        });
+    })
+    .catch(err => console.log(err));
